@@ -14,7 +14,7 @@
 **A complete Pterodactyl installer & management tool. One command. Everything included.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v4.5.0-blue.svg)](https://github.com/Laksly/pterodactyl-installer/releases)
+[![Version](https://img.shields.io/badge/version-v1.0-blue.svg)](https://github.com/Laksly/pterodactyl-installer/releases)
 [![Pterodactyl](https://img.shields.io/badge/Pterodactyl-Panel%20%2B%20Wings-green.svg)](https://pterodactyl.io)
 
 🌐 **[laksly.online](https://laksly.online)** • 💬 **[dsc.gg/laksly](https://dsc.gg/laksly)**
@@ -310,7 +310,7 @@ Make sure DNS records and firewall rules match the deployment method selected du
 
 ```text
 Laksly Pterodactyl Installer
-Version: v4.5.0
+Version: v1.0
 ```
 
 ---
