@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-#  Laksly — Pterodactyl Master Command v4.5.0
+#  Laksly — Pterodactyl Master Command v1.0
 #  One-tap installer — run as root:
 #
 #    bash <(curl -fsSL https://raw.githubusercontent.com/Laksly/pterodactyl-installer/main/install.sh)
@@ -33,7 +33,7 @@ EOF
 
 echo -e "${RESET}"
 echo -e "${BOLD}${WHITE}  ╔══════════════════════════════════════════════════════════════╗${RESET}"
-echo -e "${BOLD}${WHITE}  ║   ⚡  Laksly — Pterodactyl Master Command v4.5.0 Installer  ⚡   ║${RESET}"
+echo -e "${BOLD}${WHITE}  ║   ⚡  Laksly — Pterodactyl Master Command v1.0 Installer  ⚡   ║${RESET}"
 echo -e "${BOLD}${CYAN}  ║   🌐  https://laksly.online  •  dsc.gg/laksly         ║${RESET}"
 echo -e "${BOLD}${WHITE}  ╚══════════════════════════════════════════════════════════════╝${RESET}"
 echo ""
