@@ -21,7 +21,7 @@ RESET='\033[0m'
 
 clear
 
-echo -e "${CYAN}${BOLD}"
+echo -e "${PURPLE}${BOLD}"
 cat << 'EOF'
 ██╗      █████╗ ██╗  ██╗███████╗██╗     ██╗   ██╗
 ██║     ██╔══██╗██║ ██╔╝██╔════╝██║     ╚██╗ ██╔╝
@@ -34,7 +34,7 @@ EOF
 echo -e "${RESET}"
 echo -e "${BOLD}${WHITE}  ╔══════════════════════════════════════════════════════════════╗${RESET}"
 echo -e "${BOLD}${WHITE}  ║   ⚡  Laksly — Pterodactyl Master Command v1.0 Installer  ⚡   ║${RESET}"
-echo -e "${BOLD}${CYAN}  ║   🌐  https://laksly.online  •  dsc.gg/laksly         ║${RESET}"
+echo -e "${BOLD}${PURPLE}  ║   🌐  https://laksly.online  •  dsc.gg/laksly         ║${RESET}"
 echo -e "${BOLD}${WHITE}  ╚══════════════════════════════════════════════════════════════╝${RESET}"
 echo ""
 
@@ -53,7 +53,7 @@ fi
 
 . /etc/os-release
 
-echo -e "${CYAN}  [•] Detected OS: ${ID} ${VERSION_ID:-} (${VERSION_CODENAME:-unknown})${RESET}"
+echo -e "${PURPLE}  [•] Detected OS: ${ID} ${VERSION_ID:-} (${VERSION_CODENAME:-unknown})${RESET}"
 
 case "${ID}:${VERSION_ID}" in
     ubuntu:22.04|ubuntu:24.04|ubuntu:26.04)
@@ -68,7 +68,7 @@ case "${ID}:${VERSION_ID}" in
 esac
 
 # ── Dependency check ─────────────────────────────────────────
-echo -e "${CYAN}  [•] Checking dependencies...${RESET}"
+echo -e "${PURPLE}  [•] Checking dependencies...${RESET}"
 
 if ! DEBIAN_FRONTEND=noninteractive apt-get update -y &>/dev/null; then
     echo -e "${RED}  [✘] apt-get update failed. Fix APT sources before continuing.${RESET}"
@@ -91,7 +91,7 @@ RAW_URL="https://raw.githubusercontent.com/Laksly/pterodactyl-installer/main/${S
 API_URL="https://api.github.com/repos/Laksly/pterodactyl-installer/contents/${SCRIPT_NAME}?ref=main"
 
 echo ""
-echo -e "${CYAN}  [•] Downloading Laksly Master Command...${RESET}"
+echo -e "${PURPLE}  [•] Downloading Laksly Master Command...${RESET}"
 echo ""
 
 # Always start clean.
@@ -101,7 +101,7 @@ DOWNLOAD_OK=false
 DOWNLOAD_METHOD=""
 
 # ── Method 1: GitHub Raw ─────────────────────────────────────
-echo -e "${CYAN}  [•] Trying GitHub Raw...${RESET}"
+echo -e "${PURPLE}  [•] Trying GitHub Raw...${RESET}"
 
 if command -v curl &>/dev/null; then
     if curl -4 -fsSL \
@@ -128,7 +128,7 @@ fi
 if [ "$DOWNLOAD_OK" = false ]; then
 
     echo -e "${YELLOW}  [!] GitHub Raw unavailable.${RESET}"
-    echo -e "${CYAN}  [•] Trying GitHub API fallback...${RESET}"
+    echo -e "${PURPLE}  [•] Trying GitHub API fallback...${RESET}"
 
     rm -f "$TMP_SCRIPT_PATH"
 
@@ -171,7 +171,7 @@ if [ "$DOWNLOAD_OK" = false ]; then
     echo -e "${YELLOW}  Check your server's outbound HTTPS connectivity.${RESET}"
     echo ""
     echo -e "${WHITE}  Repository:${RESET}"
-    echo -e "${CYAN}  https://github.com/Laksly/pterodactyl-installer${RESET}"
+    echo -e "${PURPLE}  https://github.com/Laksly/pterodactyl-installer${RESET}"
     echo ""
 
     exit 1
