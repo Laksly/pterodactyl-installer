@@ -9,7 +9,7 @@
 # ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝
 #
 #  ══════════════════════════════════════════════════════════════════════
-#  ★★★   PTERODACTYL MASTER COMMAND  v4.5.0  — by Laksly   ★★★
+#  ★★★   PTERODACTYL MASTER COMMAND  v1.0  — by Laksly   ★★★
 #  ══════════════════════════════════════════════════════════════════════
 #
 #         ░▒▓█  PROUDLY HOSTED & POWERED BY  L A K S L Y  █▓▒░
@@ -18,7 +18,7 @@
 #         Discord  :  https://dsc.gg/laksly
 #         GitHub   :  https://github.com/Laksly
 #         Developer:  Gamer Laksly 
-#         Script   :  laksly-pterodactyl.sh  v4.5.0
+#         Script   :  laksly-pterodactyl.sh  v1.0
 #
 #  ══════════════════════════════════════════════════════════════════════
 #  Laksly delivers enterprise-grade game server hosting, VPS, and
@@ -518,7 +518,7 @@ show_banner() {
 ASCIIEOF
     echo -e "${RESET}"
     echo -e "${BOLD}${WHITE}  ╔══════════════════════════════════════════════════════════════╗${RESET}"
-    echo -e "${BOLD}${WHITE}  ║  ⚡⚡  PTERODACTYL MASTER COMMAND  v4.5.0  ⚡⚡              ║${RESET}"
+    echo -e "${BOLD}${WHITE}  ║  ⚡⚡  PTERODACTYL MASTER COMMAND  v1.0  ⚡⚡              ║${RESET}"
     echo -e "${BOLD}${CYAN}  ║  ░▒▓█  Hosted & Powered by  Laksly  █▓▒░         ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  🌐  https://laksly.com  •  discord.gg/laksly          ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  🚀  Enterprise Game Hosting • VPS • Managed Pterodactyl     ║${RESET}"
@@ -3098,7 +3098,7 @@ emergency_502_fix() {
 
     mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
     cat > /etc/nginx/sites-available/pterodactyl.conf << EMERGENCYNGINX
-# laksly — Pterodactyl Panel (Emergency Recovery Config v4.5.0)
+# laksly — Pterodactyl Panel (Emergency Recovery Config v1.0)
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
