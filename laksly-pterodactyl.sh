@@ -28,15 +28,15 @@
 # ============================================================
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
-BLUE='\033[0;34m'; CYAN='\033[0;36m'; MAGENTA='\033[0;35m'
+BLUE='\033[0;34m'; PURPLE='\033[0;36m'; MAGENTA='\033[0;35m'
 WHITE='\033[1;37m'; BOLD='\033[1m'; DIM='\033[2m'; RESET='\033[0m'
 
 ok()   { echo -e "${GREEN}  [✔] $*${RESET}"; }
 err()  { echo -e "${RED}  [✘] $*${RESET}"; }
-info() { echo -e "${CYAN}  [•] $*${RESET}"; }
+info() { echo -e "${PURPLE}  [•] $*${RESET}"; }
 warn() { echo -e "${YELLOW}  [!] $*${RESET}"; }
 sep()  { echo -e "${DIM}  ──────────────────────────────────────────────────────${RESET}"; }
-hsep() { echo -e "${CYAN}  ══════════════════════════════════════════════════════${RESET}"; }
+hsep() { echo -e "${PURPLE}  ══════════════════════════════════════════════════════${RESET}"; }
 ask()  { echo -en "${MAGENTA}  [?] $* ${RESET}"; }
 step() { echo -e "\n${BOLD}${WHITE}  ──[ $* ]──${RESET}"; }
 
@@ -53,7 +53,7 @@ detect_os() {
 spinner() {
     local pid=$! sp='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏' i=0
     while kill -0 "$pid" 2>/dev/null; do
-        printf "\r  ${CYAN}[%s]${RESET} %s..." "${sp:i++%${#sp}:1}" "$1"
+        printf "\r  ${PURPLE}[%s]${RESET} %s..." "${sp:i++%${#sp}:1}" "$1"
         sleep 0.1
     done
     wait "$pid"; local rc=$?
@@ -507,7 +507,7 @@ _add_php_repo() {
 # ═══════════════════════════════════════════════════════════════
 show_banner() {
     clear
-    echo -e "${CYAN}${BOLD}"
+    echo -e "${PURPLE}${BOLD}"
     cat << 'ASCIIEOF'
 ██╗      █████╗ ██╗  ██╗███████╗██╗     ██╗   ██╗
 ██║     ██╔══██╗██║ ██╔╝██╔════╝██║     ╚██╗ ██╔╝
@@ -519,7 +519,7 @@ ASCIIEOF
     echo -e "${RESET}"
     echo -e "${BOLD}${WHITE}  ╔══════════════════════════════════════════════════════════════╗${RESET}"
     echo -e "${BOLD}${WHITE}  ║  ⚡⚡  PTERODACTYL MASTER COMMAND  v1.0  ⚡⚡              ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  ░▒▓█  Hosted & Powered by  Laksly  █▓▒░         ║${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  ░▒▓█  Hosted & Powered by  Laksly  █▓▒░         ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  🌐  https://laksly.com  •  discord.gg/laksly          ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  🚀  Enterprise Game Hosting • VPS • Managed Pterodactyl     ║${RESET}"
     echo -e "${BOLD}${WHITE}  ╚══════════════════════════════════════════════════════════════╝${RESET}"
@@ -548,9 +548,9 @@ main_menu() {
     echo -e "  ${YELLOW}[8]${RESET}   🔄  Update Wings"
     echo -e "  ${YELLOW}[9]${RESET}   🔄  Update Both (Panel + Wings)"
     hsep
-    echo -e "  ${BOLD}${CYAN}── FIX / MANAGE ────────────────────────────────────────${RESET}"
-    echo -e "  ${CYAN}[10]${RESET}  🛠️   Fix / Repair Panel"
-    echo -e "  ${CYAN}[11]${RESET}  🛠️   Fix / Repair Wings"
+    echo -e "  ${BOLD}${PURPLE}── FIX / MANAGE ────────────────────────────────────────${RESET}"
+    echo -e "  ${PURPLE}[10]${RESET}  🛠️   Fix / Repair Panel"
+    echo -e "  ${PURPLE}[11]${RESET}  🛠️   Fix / Repair Wings"
     echo -e "  ${MAGENTA}[12]${RESET}  🧩  Blueprints Manager"
     echo -e "  ${MAGENTA}[13]${RESET}  🥚  Addons / Eggs Manager"
     echo -e "  ${BLUE}[14]${RESET}  🔐  SSL Certificate Manager"
@@ -589,10 +589,10 @@ main_menu() {
         21) themes_blueprints_menu ;;
         0)
             echo ""
-            echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════╗${RESET}"
-            echo -e "${BOLD}${CYAN}  ║  ★  Thank you for using laksly!  ★               ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ║     https://laksly.com  •  Stay powerful.         ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════╝${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════╗${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║  ★  Thank you for using laksly!  ★               ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║     https://laksly.com  •  Stay powerful.         ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════╝${RESET}"
             echo ""; exit 0 ;;
         *) warn "Invalid option. Press Enter to retry..."; read -r; main_menu ;;
     esac
@@ -1068,9 +1068,9 @@ _post_cf_setup() {
     _install_cloudflared
 
     echo ""
-    echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════════════╗${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  HOW TO GET YOUR TUNNEL TOKEN (takes ~2 minutes)             ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ╠══════════════════════════════════════════════════════════════╣${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════════════╗${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  HOW TO GET YOUR TUNNEL TOKEN (takes ~2 minutes)             ║${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╠══════════════════════════════════════════════════════════════╣${RESET}"
     echo -e "${BOLD}${WHITE}  ║  1. Go to: https://one.dash.cloudflare.com                   ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  2. Click  Networks → Tunnels → Create a Tunnel              ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  3. Choose  Cloudflared  connector type                      ║${RESET}"
@@ -1080,7 +1080,7 @@ _post_cf_setup() {
     echo -e "${BOLD}${WHITE}  ║  6. In Public Hostname tab add:                               ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║     Subdomain: ${DOMAIN%%.*}  Domain: ${DOMAIN#*.}              ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║     Type: HTTP   URL: localhost:80                            ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════════════╝${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════════════╝${RESET}"
     echo ""
     warn "Make sure 'This hostname is not covered by a certificate' warning is resolved"
     warn "in Cloudflare → SSL/TLS → set mode to Full or Full (Strict)"
@@ -1120,16 +1120,16 @@ _print_panel_summary() {
     local DOMAIN="$1" USER="$2" MODE="$3"
     local SCHEME="https"; [[ "$MODE" == "3" ]] && SCHEME="http"
     echo ""
-    echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════╗${RESET}"
-    echo -e "${BOLD}${CYAN}  ║           🎉  PANEL INSTALL SUMMARY  🎉              ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ╠══════════════════════════════════════════════════════╣${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  🌐  Panel URL  : ${SCHEME}://${DOMAIN}${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  👤  Admin User : ${USER}${RESET}"
-    [[ "$MODE" == "1" ]] && echo -e "${BOLD}${CYAN}  ║  🔒  Mode       : Nginx + Let's Encrypt SSL${RESET}"
-    [[ "$MODE" == "2" ]] && echo -e "${BOLD}${CYAN}  ║  ☁️   Mode       : Cloudflare Tunnel${RESET}"
-    [[ "$MODE" == "3" ]] && echo -e "${BOLD}${CYAN}  ║  🌐  Mode       : HTTP Only (no SSL)${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  ★   Powered by : laksly — https://laksly.com  ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════╝${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════╗${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║           🎉  PANEL INSTALL SUMMARY  🎉              ║${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╠══════════════════════════════════════════════════════╣${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  🌐  Panel URL  : ${SCHEME}://${DOMAIN}${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  👤  Admin User : ${USER}${RESET}"
+    [[ "$MODE" == "1" ]] && echo -e "${BOLD}${PURPLE}  ║  🔒  Mode       : Nginx + Let's Encrypt SSL${RESET}"
+    [[ "$MODE" == "2" ]] && echo -e "${BOLD}${PURPLE}  ║  ☁️   Mode       : Cloudflare Tunnel${RESET}"
+    [[ "$MODE" == "3" ]] && echo -e "${BOLD}${PURPLE}  ║  🌐  Mode       : HTTP Only (no SSL)${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  ★   Powered by : laksly — https://laksly.com  ║${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════╝${RESET}"
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -1178,9 +1178,9 @@ install_panel_menu() {
         err "Scroll up to see the exact error."
         echo ""
         echo -e "  ${WHITE}Common fixes:${RESET}"
-        echo -e "  ${CYAN}→ Run option [20] Emergency Recovery to install missing packages${RESET}"
-        echo -e "  ${CYAN}→ Run option [10] → [9] to fix DB credentials${RESET}"
-        echo -e "  ${CYAN}→ Run option [6] Uninstall Everything then reinstall fresh${RESET}"
+        echo -e "  ${PURPLE}→ Run option [20] Emergency Recovery to install missing packages${RESET}"
+        echo -e "  ${PURPLE}→ Run option [10] → [9] to fix DB credentials${RESET}"
+        echo -e "  ${PURPLE}→ Run option [6] Uninstall Everything then reinstall fresh${RESET}"
     fi
     pause
 }
@@ -1249,11 +1249,11 @@ install_wings() {
     local WINGS_IP; WINGS_IP=$(hostname -I | awk '{print $1}')
     sep; ok "Wings installation complete!"
     echo ""
-    echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════╗${RESET}"
-    echo -e "${BOLD}${CYAN}  ║           🎉  WINGS INSTALL SUMMARY  🎉              ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ╠══════════════════════════════════════════════════════╣${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  🖥️  Node IP : ${WINGS_IP}${RESET}"
-    echo -e "${BOLD}${CYAN}  ╠══════════════════════════════════════════════════════╣${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════╗${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║           🎉  WINGS INSTALL SUMMARY  🎉              ║${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╠══════════════════════════════════════════════════════╣${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  🖥️  Node IP : ${WINGS_IP}${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╠══════════════════════════════════════════════════════╣${RESET}"
     echo -e "${BOLD}${WHITE}  ║  NEXT STEPS:                                         ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  1. Panel → Admin → Nodes → Create Node              ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  2. 'Configuration' tab → copy auto-deploy token     ║${RESET}"
@@ -1262,8 +1262,8 @@ install_wings() {
     echo -e "${BOLD}${WHITE}  ║       --panel-url=https://your.panel \\              ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║       --token=<TOKEN> --node=<ID>                   ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  4. systemctl start wings                            ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  ★  laksly — https://laksly.com                ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════╝${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  ★  laksly — https://laksly.com                ║${RESET}"
+    echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════╝${RESET}"
     pause
 }
 
@@ -1313,7 +1313,7 @@ install_combined() {
     _print_panel_summary "$P_DOMAIN" "$P_ADMIN_USER" "$COMBO_MODE"
     echo -e "\n  ${WHITE}Wings IP: $(hostname -I | awk '{print $1}')${RESET}"
     echo -e "  ${WHITE}→ Create a Node in Panel, then run 'wings configure ...' to link.${RESET}"
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"
     pause
 }
 
@@ -1370,7 +1370,7 @@ uninstall_panel() {
 
     sep
     ok "Panel fully uninstalled!"
-    echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"
+    echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"
     pause
 }
 
@@ -1391,7 +1391,7 @@ uninstall_wings() {
             docker-buildx-plugin docker-compose-plugin &>/dev/null
         ok "Docker removed"
     }
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -1674,8 +1674,8 @@ uninstall_everything() {
     echo -e "${BOLD}${WHITE}  ║  ✔  Blueprint Framework     removed                      ║${RESET}"
     echo -e "${BOLD}${WHITE}  ║  ✔  Cloudflared            removed                      ║${RESET}"
     echo -e "${BOLD}${GREEN}  ╠══════════════════════════════════════════════════════════╣${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  Server is clean. Run option [1] for a fresh install.   ║${RESET}"
-    echo -e "${BOLD}${CYAN}  ║  ★  laksly — https://laksly.com                   ║${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  Server is clean. Run option [1] for a fresh install.   ║${RESET}"
+    echo -e "${BOLD}${PURPLE}  ║  ★  laksly — https://laksly.com                   ║${RESET}"
     echo -e "${BOLD}${GREEN}  ╚══════════════════════════════════════════════════════════╝${RESET}"
     echo ""
     pause
@@ -1713,7 +1713,7 @@ update_panel() {
     ok "Caches cleared"
     chown -R www-data:www-data /var/www/pterodactyl
     php_cmd artisan up &>/dev/null; systemctl restart pteroq
-    sep; ok "Panel updated!"; echo -e "${CYAN}  ★ Laksly — https://laksly.com${RESET}"; pause
+    sep; ok "Panel updated!"; echo -e "${PURPLE}  ★ Laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -1731,14 +1731,14 @@ update_wings() {
     chmod u+x /usr/local/bin/wings
     systemctl start wings 2>/dev/null
     ok "Wings updated: ${OV} → $(/usr/local/bin/wings --version 2>/dev/null || echo 'latest')"
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
 #  [10]  FIX / REPAIR PANEL
 # ═══════════════════════════════════════════════════════════════
 fix_panel() {
-    show_banner; echo -e "${BOLD}${CYAN}  🛠️  FIX / REPAIR PANEL${RESET}"; sep; require_root
+    show_banner; echo -e "${BOLD}${PURPLE}  🛠️  FIX / REPAIR PANEL${RESET}"; sep; require_root
 
     echo -e "  ${WHITE}Choose a fix:${RESET}"
     echo -e "  ${GREEN}[1]${RESET} Fix Permissions"
@@ -2014,7 +2014,7 @@ fix_panel() {
         9) _fp_fix_db ;;
         *) warn "Invalid option" ;;
     esac
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 
@@ -2022,7 +2022,7 @@ fix_panel() {
 #  [11]  FIX / REPAIR WINGS
 # ═══════════════════════════════════════════════════════════════
 fix_wings() {
-    show_banner; echo -e "${BOLD}${CYAN}  🛠️  FIX / REPAIR WINGS${RESET}"; sep; require_root
+    show_banner; echo -e "${BOLD}${PURPLE}  🛠️  FIX / REPAIR WINGS${RESET}"; sep; require_root
     echo -e "  ${WHITE}Choose a fix:${RESET}"
     echo -e "  ${GREEN}[1]${RESET} Restart Wings"
     echo -e "  ${GREEN}[2]${RESET} Reconfigure Wings (new token)"
@@ -2060,7 +2060,7 @@ fix_wings() {
         5) systemctl restart docker; sleep 2; systemctl restart wings; ok "Docker + Wings restarted" ;;
         *) warn "Invalid option" ;;
     esac
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -2462,16 +2462,16 @@ blueprints_menu() {
         8)
             echo ""
             echo -e "  ${WHITE}Blueprint Community Resources:${RESET}"
-            echo -e "  ${CYAN}  🌐 https://blueprint.zip                 ${DIM}official site + browse extensions${RESET}"
-            echo -e "  ${CYAN}  🐙 https://github.com/BlueprintFramework/framework${RESET}"
-            echo -e "  ${CYAN}  💬 https://discord.gg/blueprint          ${DIM}community Discord${RESET}"
-            echo -e "  ${CYAN}  📦 https://blueprint.zip/browse          ${DIM}extension marketplace${RESET}"
+            echo -e "  ${PURPLE}  🌐 https://blueprint.zip                 ${DIM}official site + browse extensions${RESET}"
+            echo -e "  ${PURPLE}  🐙 https://github.com/BlueprintFramework/framework${RESET}"
+            echo -e "  ${PURPLE}  💬 https://discord.gg/blueprint          ${DIM}community Discord${RESET}"
+            echo -e "  ${PURPLE}  📦 https://blueprint.zip/browse          ${DIM}extension marketplace${RESET}"
             ;;
 
         *) warn "Invalid option" ;;
     esac
 
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -2490,7 +2490,7 @@ eggs_menu() {
            [[ "$ES" =~ ^http ]] && { curl -fsSL -o /tmp/_zynr_egg.json "$ES"; ok "Downloaded to /tmp/_zynr_egg.json"; } \
                || ok "Local file: $ES"
            info "Import: Panel → Admin → Nests → Import Egg" ;;
-        2) echo -e "\n  ${CYAN}• https://github.com/pelican-eggs/eggs\n  • https://github.com/parkervcp/eggs\n  • https://github.com/ign-gg/Pterodactyl-Eggs${RESET}" ;;
+        2) echo -e "\n  ${PURPLE}• https://github.com/pelican-eggs/eggs\n  • https://github.com/parkervcp/eggs\n  • https://github.com/ign-gg/Pterodactyl-Eggs${RESET}" ;;
         3) ask "Directory:"; read -r ED
            [ -d "$ED" ] || { err "Not found: $ED"; pause; return; }
            C=0; for f in "$ED"/*.json; do [ -f "$f" ] || continue
@@ -2505,7 +2505,7 @@ eggs_menu() {
            ok "Cloned → /tmp/parkervcp-eggs" ;;
         *) warn "Invalid option" ;;
     esac
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -2534,7 +2534,7 @@ ssl_menu() {
         6) certbot renew --dry-run && ok "Dry run passed" ;;
         *) warn "Invalid option" ;;
     esac
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -2572,7 +2572,7 @@ cloudflare_menu() {
         2)
             _install_cloudflared
             echo ""
-            echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════════╗${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════════╗${RESET}"
             echo -e "${BOLD}${WHITE}  ║  HOW TO GET YOUR TOKEN:                                  ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║  1. https://one.dash.cloudflare.com                      ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║  2. Networks → Tunnels → Create a Tunnel                 ║${RESET}"
@@ -2580,7 +2580,7 @@ cloudflare_menu() {
             echo -e "${BOLD}${WHITE}  ║  4. Copy the token (eyJhIjoiOWU1OTA5...)                 ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║  5. Public Hostname → add your subdomain → HTTP:80       ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║  6. Make sure SSL/TLS mode is Full or Full (Strict)      ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════════╝${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════════╝${RESET}"
             echo ""
             # Stop and remove any old cloudflared service first
             systemctl stop cloudflared 2>/dev/null
@@ -2649,7 +2649,7 @@ cloudflare_menu() {
             ;;
         *) warn "Invalid option" ;;
     esac
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -2685,18 +2685,18 @@ status_check() {
     echo -e "  🌐 IP   : $(hostname -I | awk '{print $1}')  |  $(hostname)"
     echo -e "\n  ${WHITE}── Versions ─────────────────────────────────────────${RESET}"
     [ -f /var/www/pterodactyl/config/app.php ] \
-        && echo -e "  🚀 Panel : ${CYAN}v$(grep "'version'" /var/www/pterodactyl/config/app.php | head -1 | awk -F"'" '{print $4}')${RESET}" \
+        && echo -e "  🚀 Panel : ${PURPLE}v$(grep "'version'" /var/www/pterodactyl/config/app.php | head -1 | awk -F"'" '{print $4}')${RESET}" \
         || echo -e "  🚀 Panel : ${RED}Not installed${RESET}"
     command -v wings &>/dev/null \
-        && echo -e "  🔧 Wings : ${CYAN}$(wings --version 2>/dev/null)${RESET}" \
+        && echo -e "  🔧 Wings : ${PURPLE}$(wings --version 2>/dev/null)${RESET}" \
         || echo -e "  🔧 Wings : ${RED}Not installed${RESET}"
     command -v docker &>/dev/null \
-        && echo -e "  🐳 Docker: ${CYAN}$(docker --version 2>/dev/null | awk '{print $3}' | tr -d ',')${RESET}  ($(docker ps -q 2>/dev/null | wc -l) running)" \
+        && echo -e "  🐳 Docker: ${PURPLE}$(docker --version 2>/dev/null | awk '{print $3}' | tr -d ',')${RESET}  ($(docker ps -q 2>/dev/null | wc -l) running)" \
         || echo -e "  🐳 Docker: ${RED}Not installed${RESET}"
     command -v cloudflared &>/dev/null \
-        && echo -e "  ☁️  CF    : ${CYAN}$(cloudflared --version 2>/dev/null | head -1)${RESET}" \
+        && echo -e "  ☁️  CF    : ${PURPLE}$(cloudflared --version 2>/dev/null | head -1)${RESET}" \
         || echo -e "  ☁️  CF    : ${DIM}Not installed${RESET}"
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -2728,7 +2728,7 @@ backup_menu() {
            find "$BD" -type f -mtime +"$DD" -delete && ok "Old backups removed" ;;
         *) warn "Invalid option" ;;
     esac
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -2747,7 +2747,7 @@ reset_admin_password() {
         else{echo 'User not found.';}
     " 2>/dev/null
     ok "Password reset for: $RU"
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -2961,21 +2961,21 @@ CREATEEOF
 
             # ── Summary
             echo ""
-            echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════╗${RESET}"
-            echo -e "${BOLD}${CYAN}  ║      🎉  DATABASE REBUILT SUCCESSFULLY  🎉           ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ╠══════════════════════════════════════════════════════╣${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════╗${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║      🎉  DATABASE REBUILT SUCCESSFULLY  🎉           ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╠══════════════════════════════════════════════════════╣${RESET}"
             echo -e "${BOLD}${WHITE}  ║  DB Host     : 127.0.0.1                            ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║  DB Name     : panel                                ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║  DB User     : pterodactyl                          ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║  DB Password : ${NEW_DB_PASS}${RESET}"
             echo -e "${BOLD}${WHITE}  ║  Admin User  : ${NEW_ADMIN_USER}${RESET}"
-            echo -e "${BOLD}${CYAN}  ║  ★  laksly — https://laksly.com               ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════╝${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║  ★  laksly — https://laksly.com               ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════╝${RESET}"
             ;;
 
         *) warn "Invalid option" ;;
     esac
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -3230,7 +3230,7 @@ EMERGENCYNGINX
     warn "If still getting 502: curl -v http://localhost"
     warn "Nginx logs: journalctl -u nginx -n 30"
     sep
-    echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"
+    echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"
     pause
 }
 
@@ -3432,7 +3432,7 @@ themes_blueprints_menu() {
                 err "nebula.blueprint not found on this server!"
                 echo ""
                 echo -e "  ${WHITE}Upload it first — from your PC run:${RESET}"
-                echo -e "  ${CYAN}  scp nebula.blueprint root@$(hostname -I | awk '{print $1}'):/root/${RESET}"
+                echo -e "  ${PURPLE}  scp nebula.blueprint root@$(hostname -I | awk '{print $1}'):/root/${RESET}"
                 echo -e "  ${DIM}  Or upload Blueprint.rar (full pack) to /root/ instead${RESET}"
                 pause; return
             fi
@@ -3450,12 +3450,12 @@ themes_blueprints_menu() {
             if [ $RC -eq 0 ]; then
                 ok "Nebula theme installed!"
                 echo ""
-                echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════╗${RESET}"
-                echo -e "${BOLD}${CYAN}  ║  🎨  NEBULA THEME INSTALLED SUCCESSFULLY             ║${RESET}"
-                echo -e "${BOLD}${CYAN}  ╠══════════════════════════════════════════════════════╣${RESET}"
+                echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════╗${RESET}"
+                echo -e "${BOLD}${PURPLE}  ║  🎨  NEBULA THEME INSTALLED SUCCESSFULLY             ║${RESET}"
+                echo -e "${BOLD}${PURPLE}  ╠══════════════════════════════════════════════════════╣${RESET}"
                 echo -e "${BOLD}${WHITE}  ║  Panel → Admin → Nebula  to configure it             ║${RESET}"
                 echo -e "${BOLD}${WHITE}  ║  Users: Profile → Theme → select Nebula              ║${RESET}"
-                echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════╝${RESET}"
+                echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════╝${RESET}"
             else
                 err "Nebula install failed (exit ${RC})"
             fi
@@ -3511,13 +3511,13 @@ themes_blueprints_menu() {
             done
 
             echo ""
-            echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════╗${RESET}"
-            echo -e "${BOLD}${CYAN}  ║      📦  Full Blueprint Pack — Done                  ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ╠══════════════════════════════════════════════════════╣${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════╗${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║      📦  Full Blueprint Pack — Done                  ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╠══════════════════════════════════════════════════════╣${RESET}"
             echo -e "${BOLD}${GREEN}  ║  ✔  Installed : ${PASS} / ${TOTAL}${RESET}"
             [ $FAIL -gt 0 ] && echo -e "${BOLD}${RED}  ║  ✘  Failed    : ${FAIL}${RESET}" && \
                 echo -e "${RED}${FAIL_LIST}${RESET}"
-            echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════╝${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════╝${RESET}"
             ;;
 
         # ── [3] Pick specific ─────────────────────────────────
@@ -3590,27 +3590,27 @@ themes_blueprints_menu() {
         5)
             local MY_IP; MY_IP=$(hostname -I | awk '{print $1}')
             echo ""
-            echo -e "${BOLD}${CYAN}  ╔══════════════════════════════════════════════════════════════╗${RESET}"
-            echo -e "${BOLD}${CYAN}  ║  📤  HOW TO UPLOAD FILES TO YOUR SERVER                     ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ╠══════════════════════════════════════════════════════════════╣${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╔══════════════════════════════════════════════════════════════╗${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║  📤  HOW TO UPLOAD FILES TO YOUR SERVER                     ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╠══════════════════════════════════════════════════════════════╣${RESET}"
             echo -e "${BOLD}${WHITE}  ║  Run these from your LOCAL PC terminal / PowerShell:         ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║                                                              ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ║  Upload full pack (recommended):                            ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║  Upload full pack (recommended):                            ║${RESET}"
             echo -e "${BOLD}${GREEN}  ║    scp Blueprint.rar root@${MY_IP}:/root/             ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║                                                              ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ║  Upload Nebula theme only:                                  ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║  Upload Nebula theme only:                                  ║${RESET}"
             echo -e "${BOLD}${GREEN}  ║    scp nebula.blueprint root@${MY_IP}:/root/         ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║                                                              ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ║  Using FileZilla / WinSCP:                                  ║${RESET}"
+            echo -e "${BOLD}${PURPLE}  ║  Using FileZilla / WinSCP:                                  ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║    Host: ${MY_IP}  →  upload to /root/              ║${RESET}"
             echo -e "${BOLD}${WHITE}  ║    Then re-run this menu option [1] or [2]                  ║${RESET}"
-            echo -e "${BOLD}${CYAN}  ╚══════════════════════════════════════════════════════════════╝${RESET}"
+            echo -e "${BOLD}${PURPLE}  ╚══════════════════════════════════════════════════════════════╝${RESET}"
             ;;
 
         *) warn "Invalid option" ;;
     esac
 
-    sep; echo -e "${CYAN}  ★ laksly — https://laksly.com${RESET}"; pause
+    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
 
 # ── Redis auto-fix helper ────────────────────────────────────
