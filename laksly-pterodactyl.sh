@@ -765,18 +765,43 @@ _do_install_panel() {
     fi
     ok "Panel files extracted"
 
-    # 9 ── MariaDB
+# 9 ── MariaDB
     step "MariaDB Database"
-    systemctl enable --now mariadb &>/dev/null
+    systemctl enable --now mariadb &>/dev/null || {
+        err "MariaDB failed to start"
+        exit 1
+    }
     sleep 2
+
     mysql -u root 2>/dev/null <<SQLEOF
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASS}';
-CREATE DATABASE IF NOT EXISTS panel;
-CREATE USER IF NOT EXISTS 'pterodactyl'@'127.0.0.1' IDENTIFIED BY '${DB_ROOT_PASS}';
+
+CREATE DATABASE IF NOT EXISTS panel
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+CREATE USER IF NOT EXISTS 'pterodactyl'@'127.0.0.1'
+    IDENTIFIED BY '${DB_ROOT_PASS}';
+
+ALTER USER 'pterodactyl'@'127.0.0.1'
+    IDENTIFIED BY '${DB_ROOT_PASS}';
+
 GRANT ALL PRIVILEGES ON panel.* TO 'pterodactyl'@'127.0.0.1';
+
 FLUSH PRIVILEGES;
 SQLEOF
-    ok "Database 'panel' + user 'pterodactyl' created"
+
+    if [ $? -ne 0 ]; then
+        err "MariaDB database/user setup failed"
+        exit 1
+    fi
+
+    if ! mysql -u pterodactyl -p"${DB_ROOT_PASS}" -h 127.0.0.1 -e "USE panel;" &>/dev/null; then
+        err "MariaDB user 'pterodactyl' cannot access database 'panel'"
+        exit 1
+    fi
+
+    ok "Database 'panel' + user 'pterodactyl' created and verified"
 
     # 10 ── Composer install
     step "Composer Dependencies"
