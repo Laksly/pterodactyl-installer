@@ -2043,6 +2043,7 @@ fix_panel() {
 }
 
 
+```bash
 # ═══════════════════════════════════════════════════════════════
 #  [11]  FIX / REPAIR WINGS
 # ═══════════════════════════════════════════════════════════════
@@ -2062,8 +2063,26 @@ fix_wings() {
             ask "Panel URL:"; read -r W_URL
             ask "Wings token (Panel → Node → Configuration):"; read -r W_TOKEN
             ask "Node ID:"; read -r W_NID
-            wings configure --panel-url="$W_URL" --token="$W_TOKEN" --node="$W_NID" --allow-insecure
-            systemctl start wings; ok "Wings reconfigured + started"
+
+            mkdir -p /etc/pterodactyl
+
+            if wings configure --panel-url="$W_URL" --token="$W_TOKEN" --node="$W_NID" --allow-insecure; then
+                if [ -f /etc/pterodactyl/config.yml ]; then
+                    systemctl enable wings >/dev/null 2>&1
+                    systemctl start wings
+
+                    if systemctl is-active --quiet wings; then
+                        ok "Wings reconfigured + started"
+                    else
+                        warn "Wings config created, but Wings failed to start"
+                        journalctl -u wings --no-pager -n 10 --no-hostname 2>/dev/null
+                    fi
+                else
+                    warn "Wings configure completed, but /etc/pterodactyl/config.yml was not created"
+                fi
+            else
+                warn "Wings configuration failed — check Panel URL, token and Node ID"
+            fi
             ;;
         3) systemctl restart docker && ok "Docker restarted"
            docker network prune -f && ok "Unused networks pruned"
@@ -2087,6 +2106,7 @@ fix_wings() {
     esac
     sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
 }
+```
 
 # ═══════════════════════════════════════════════════════════════
 #  [12]  BLUEPRINTS MANAGER
