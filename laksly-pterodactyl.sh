@@ -2043,7 +2043,6 @@ fix_panel() {
 }
 
 
-```bash
 # ═══════════════════════════════════════════════════════════════
 #  [11]  FIX / REPAIR WINGS
 # ═══════════════════════════════════════════════════════════════
@@ -2057,56 +2056,104 @@ fix_wings() {
     echo -e "  ${GREEN}[5]${RESET} Restart Wings + Docker"
     sep; ask "Choose:"; read -r WFIX_OPT
     case "$WFIX_OPT" in
-        1) systemctl restart wings 2>/dev/null && ok "Wings restarted — $(systemctl is-active wings)" ;;
+        1)
+            systemctl restart wings 2>/dev/null && ok "Wings restarted — $(systemctl is-active wings)"
+            ;;
+
         2)
             systemctl stop wings 2>/dev/null
+
             ask "Panel URL:"; read -r W_URL
             ask "Wings token (Panel → Node → Configuration):"; read -r W_TOKEN
             ask "Node ID:"; read -r W_NID
 
+            W_URL="${W_URL%/}"
+
+            if [ -z "$W_URL" ] || [ -z "$W_TOKEN" ] || [ -z "$W_NID" ]; then
+                warn "Panel URL, token and Node ID are required"
+                break
+            fi
+
             mkdir -p /etc/pterodactyl
 
-            if wings configure --panel-url="$W_URL" --token="$W_TOKEN" --node="$W_NID" --allow-insecure; then
-                if [ -f /etc/pterodactyl/config.yml ]; then
-                    systemctl enable wings >/dev/null 2>&1
-                    systemctl start wings
+            echo -e "\n  ${WHITE}Configuring Wings...${RESET}"
+
+            if wings configure \
+                --panel-url="$W_URL" \
+                --token="$W_TOKEN" \
+                --node="$W_NID" \
+                --allow-insecure; then
+
+                if [ ! -f /etc/pterodactyl/config.yml ]; then
+                    warn "Configuration failed: /etc/pterodactyl/config.yml was not created"
+                    break
+                fi
+
+                chmod 600 /etc/pterodactyl/config.yml
+                systemctl enable wings >/dev/null 2>&1
+
+                echo -e "  ${WHITE}Starting Wings...${RESET}"
+
+                if systemctl start wings 2>/dev/null; then
+                    sleep 2
 
                     if systemctl is-active --quiet wings; then
-                        ok "Wings reconfigured + started"
+                        ok "Wings reconfigured + ONLINE"
                     else
-                        warn "Wings config created, but Wings failed to start"
-                        journalctl -u wings --no-pager -n 10 --no-hostname 2>/dev/null
+                        warn "Wings configuration created, but Wings failed to start"
+                        echo -e "\n  ${WHITE}═══ Wings Error ═══${RESET}"
+                        journalctl -u wings --no-pager -n 15 --no-hostname 2>/dev/null
                     fi
                 else
-                    warn "Wings configure completed, but /etc/pterodactyl/config.yml was not created"
+                    warn "Failed to start Wings"
+                    journalctl -u wings --no-pager -n 15 --no-hostname 2>/dev/null
                 fi
             else
-                warn "Wings configuration failed — check Panel URL, token and Node ID"
+                warn "Wings configuration failed"
+                echo -e "  ${RED}Check Panel URL, token and Node ID${RESET}"
             fi
             ;;
-        3) systemctl restart docker && ok "Docker restarted"
-           docker network prune -f && ok "Unused networks pruned"
-           systemctl restart wings && ok "Wings restarted" ;;
+
+        3)
+            systemctl restart docker && ok "Docker restarted"
+            docker network prune -f && ok "Unused networks pruned"
+            systemctl restart wings && ok "Wings restarted"
+            ;;
+
         4)
             echo -e "\n  ${WHITE}═══ Diagnostic ═══${RESET}"
             echo -e "  Wings  : $(systemctl is-active wings 2>/dev/null || echo 'not-found')"
             echo -e "  Docker : $(systemctl is-active docker 2>/dev/null || echo 'not-found')"
+
             command -v wings &>/dev/null \
                 && echo -e "  Version: $(wings --version 2>/dev/null)" \
                 || echo -e "  Binary : ${RED}NOT FOUND${RESET}"
+
             [ -f /etc/pterodactyl/config.yml ] \
                 && echo -e "  Config : ${GREEN}EXISTS${RESET}" \
-                || echo -e "  Config : ${RED}MISSING — run wings configure${RESET}"
+                || echo -e "  Config : ${RED}MISSING — run reconfigure${RESET}"
+
             echo -e "\n  ${WHITE}═══ Last 30 logs ═══${RESET}"
             journalctl -u wings --no-pager -n 30 --no-hostname 2>/dev/null \
                 || warn "No journal logs found"
             ;;
-        5) systemctl restart docker; sleep 2; systemctl restart wings; ok "Docker + Wings restarted" ;;
-        *) warn "Invalid option" ;;
+
+        5)
+            systemctl restart docker
+            sleep 2
+            systemctl restart wings
+            ok "Docker + Wings restarted"
+            ;;
+
+        *)
+            warn "Invalid option"
+            ;;
     esac
-    sep; echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"; pause
+
+    sep
+    echo -e "${PURPLE}  ★ laksly — https://laksly.com${RESET}"
+    pause
 }
-```
 
 # ═══════════════════════════════════════════════════════════════
 #  [12]  BLUEPRINTS MANAGER
